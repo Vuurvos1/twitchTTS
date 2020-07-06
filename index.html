@@ -1,25 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Highlighted Messages on Stream!</title>
+
+  <script src="web/comfy.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Hind|Open+Sans&display=swap" rel="stylesheet">
+  <link href="web/style.css" rel="stylesheet">
 </head>
+
 <body>
-    <header>
-        
-    </header>
-    
-    <main>
-        
-    </main>
-    
-    <footer>
-        
-    </footer>
-    
-    
-    <script src="js/script.js"></script>
+  <div id="parent-container" class="parent-container">
+    <div id="highlight-container" class="translucent-bg">
+      <h2><span id="badges"></span> <span id="username"></span></h2>
+      <p id="text"></p>
+    </div>
+  </div>
+
+  <audio id="audio" controls="" style="visibility: hidden;">
+    <source id="source" type="audio/wav">
+  </audio>
+
+  <script src="web/index.js"></script>
 </body>
+
 </html>
