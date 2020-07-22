@@ -8,7 +8,8 @@ const elements = {
 };
 const BADGES_BASE = 'https://badges.twitch.tv/v1/badges';
 const EMOTE_BASE = 'https://static-cdn.jtvnw.net/emoticons/v1';
-const TTS_BASE = 'https://api.streamelements.com/kappa/v2/speech';
+const TTS_BASE =
+  'https://cors-anywhere.herokuapp.com/https://lazypy.ro/tts/proxy.php';
 const params = new URLSearchParams(location.search);
 const channel = params.get('channel');
 const isTTSEnabled = params.get('tts') || false;
@@ -239,88 +240,52 @@ elements.audio.addEventListener('ended', () => {
 });
 
 async function playTTS() {
-  console.log(msgQueue);
   if (audio.paused && msgQueue.length > 0) {
-    const qs = new URLSearchParams({
-      voice: ttsVoice,
-      text: msgQueue[0],
-    });
-
     const text = msgQueue[0];
-    const voise = ttsVoice;
-    const api = 'Polly';
+    const voice = ttsVoice;
+    const str = `service=Polly&voice=${voice}&text=${encodeURIComponent(text)}`;
 
-    // Show a loading spinner while the proxy sends/receives the request
-    // document.getElementById('playbutton').classList.add('is-loading');
+    let speak = await makeTTSRequest('POST', `${TTS_BASE}?${str}`);
+    speak = JSON.parse(speak);
 
-    // Send request to our proxy script
-    var xhr = new XMLHttpRequest();
+    if (!speak.success) {
+      return;
+    }
 
-    xhr.onload = () => {
-      var response = JSON.parse(xhr.responseText);
-      if (xhr.readyState == 4 && xhr.status == '200') {
-        //console.log(response);
-        if (response.success === true) {
-          // showAudioPlayer(response.speak_url);
-          console.log(response.speak_url);
-        } else if (response.error) {
-          // showErrorMessage(response.error);
-          console.log(response.error);
-        }
-      } else {
-        console.error(response);
-      }
+    // TODO: Switch to Web Audio API instead of using Audio elements.
+    const mp3 = speak.speak_url;
+    elements.source.src = mp3;
+    const audio = elements.audio;
 
-      // Remove loading spinner
-      // document.getElementById('playbutton').classList.remove('is-loading');
-    };
-
-    xhr.open('POST', 'https://lazypy.ro/tts/proxy.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.setRequestHeader('Access-Control-Allow-Origin', 'https://lazypy.ro/');
-    // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send(
-      'service=' +
-        encodeURIComponent(api) +
-        '&voice=' +
-        encodeURIComponent(voise) +
-        '&text=' +
-        encodeURIComponent(text)
-    );
-
-    // let xhttp = new XMLHttpRequest();
-    // xhttp.onreadystatechange = () => {
-    //   if (this.readyState == 4 && this.status == 200) {
-    //     console.log(xhttp.responseText);
-    //   } else {
-    //     console.log(xhttp);
-    //   }
-    // };
-
-    // xhttp.open('get', `https://cors-anywhere.herokuapp.com/${TTS_BASE}?${qs}`);
-    // xhttp.send();
-
-    // const speak = await fetch(`${TTS_BASE}?${qs}`, {
-    // });
-
-    // console.log(speak);
-
-    // if (speak.status != 200) {
-    //   // await speak.text();
-    //   return;
-    // }
-
-    // // TODO: Switch to Web Audio API instead of using Audio elements.
-    // const mp3 = await speak.blob();
-    // const blobUrl = URL.createObjectURL(mp3);
-    // elements.source.src = blobUrl;
-    // const audio = elements.audio;
-
-    // audio.load();
-    // audio.volume = 1;
-    // audio.play();
+    audio.load();
+    audio.volume = 1;
+    audio.play();
 
     // remove message from queue
     msgQueue.shift();
   }
+}
+
+function makeTTSRequest(method, url) {
+  return new Promise(function (resolve, reject) {
+    let xhr = new XMLHttpRequest();
+    xhr.open(method, url);
+    xhr.onload = function () {
+      if (this.status >= 200 && this.status < 300) {
+        resolve(xhr.response);
+      } else {
+        reject({
+          status: this.status,
+          statusText: xhr.statusText,
+        });
+      }
+    };
+    xhr.onerror = function () {
+      reject({
+        status: this.status,
+        statusText: xhr.statusText,
+      });
+    };
+    xhr.send();
+  });
 }
