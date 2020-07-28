@@ -245,8 +245,19 @@ async function playTTS() {
     const voice = ttsVoice;
     const str = `service=Polly&voice=${voice}&text=${encodeURIComponent(text)}`;
 
-    let speak = await makeTTSRequest('POST', `${TTS_BASE}?${str}`);
-    speak = JSON.parse(speak);
+    const speak = await fetch(`${TTS_BASE}?${str}`, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then(
+      (res) => {
+        return res.json();
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
 
     if (!speak.success) {
       return;
@@ -264,28 +275,4 @@ async function playTTS() {
     // remove message from queue
     msgQueue.shift();
   }
-}
-
-function makeTTSRequest(method, url) {
-  return new Promise(function (resolve, reject) {
-    let xhr = new XMLHttpRequest();
-    xhr.open(method, url);
-    xhr.onload = function () {
-      if (this.status >= 200 && this.status < 300) {
-        resolve(xhr.response);
-      } else {
-        reject({
-          status: this.status,
-          statusText: xhr.statusText,
-        });
-      }
-    };
-    xhr.onerror = function () {
-      reject({
-        status: this.status,
-        statusText: xhr.statusText,
-      });
-    };
-    xhr.send();
-  });
 }
