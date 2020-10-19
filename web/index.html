@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <title>Highlighted Messages on Stream!</title>
+
+    <script src="./comfy.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Hind|Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link href="./style.css" rel="stylesheet" />
+    <link rel="icon" href="gonzoHead.png" type="image/png" />
+  </head>
+
+  <body>
+    <div id="parent-container" class="parent-container">
+      <div id="highlight-container" class="translucent-bg">
+        <h2><span id="badges"></span> <span id="username"></span></h2>
+        <p id="text"></p>
+      </div>
+    </div>
+
+    <audio id="audio" controls="" style="visibility: hidden">
+      <source id="source" type="audio/wav" />
+    </audio>
+
+    <script src="./index.js"></script>
+  </body>
+</html>
