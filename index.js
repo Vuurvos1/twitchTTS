@@ -7,26 +7,25 @@ const axios = require('axios');
 
 // Setup server
 let server = app.listen(process.env.PORT || 3000, () => {
-  // let host = server.address().address;
   const port = server.address().port;
   console.log(`Example app listening at http://localhost:${port}`);
 });
 
 urlencodedParser = bodyParser.urlencoded({ extended: false });
-app.use(express.static('web'));
+app.use(express.static('public'));
 
 // POST method route
 app.post('/tts', urlencodedParser, async (req, res) => {
   try {
     res.set('Access-Control-Allow-Origin', 'http://www.localhost:3000/tts');
     res.set('Access-Control-Allow-Origin', 'http://localhost:3000/tts');
+    res.set('Access-Control-Allow-Origin', 'https://www.twitchtts.glitch.me/tts');
+    res.set('Access-Control-Allow-Origin', 'https://twitchtts.glitch.me/tts');
     res.set('Access-Control-Allow-Methods', 'GET, POST');
     res.set(
       'Access-Control-Allow-Headers',
       'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With'
     );
-
-    console.log(req.query);
 
     // Intercept non-POST requests
     if (req.method != 'POST') {
@@ -51,17 +50,6 @@ app.post('/tts', urlencodedParser, async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-
-    res.send('something brok');
+    res.status(404).send('Something brok');
   }
 });
-
-// try {
-//   require('webwebweb').Run(11899);
-// } catch (error) {
-//   if (error.code === 'MODULE_NOT_FOUND') {
-//     console.error('Make sure to run `npm install`');
-//   } else {
-//     console.error(error);
-//   }
-// }
