@@ -32,16 +32,18 @@ When running locally
 
 ### Parameters
 
+You can add multiple parameters to a URL by chaining them using the `&` symbol, [see example](#Example)
+
 #### Channel
 
 `channel=firefox__`
 
 #### Voice
 
-You can select a different text to speech voice by adding the voice parameter, by default, this is set to Brian
+You can select a different text to speech voice by adding the voice parameter. By default, this is set to Brian.
 `voice=Brian`
 
-You can choose from quite a large selection of voices
+These are the voices you should be able to use (Note that some might not work)
 
 ```
 Aditi   | Amy     | Astrid   | Bianca   | Brian     | Camila   | Carla
@@ -55,15 +57,16 @@ Ricardo | Ruben   | Russell  | Salli    | Seoyeon   | Takumi   | Tatyana
 Vicki   | Vitoria | Zeina    | Zhiyu
 ```
 
-(Some of these voices might not work)
-
 #### Text to Speech
 
 `tts=true`
 
 ### Example
 
+This is an example on how your URL might look:
 `https://twitchtts.glitch.me/?channel=Firefox__&tts=true&voice=Brian`
+
+First, we have the base URL, then we set the channel to `Firefox__` using `channel=Firefox__` then we turn the text to speech function on using `tts=true` and last but not least we set the text to speech voice to `Brian` using the voice parameter.
 
 ## 🔧 Installing the project
 
@@ -72,17 +75,19 @@ If you want to tinker on the project, see how it work or customize it to fit you
 First of all, make sure you have **Node.js**, **NPM** and **Git** installed.
 
 1. Choose or make a new directory to clone the project to
-2. Clone the repository
-   `git@github.com:Vuurvos1/twitchTTS.git`
+2. Clone the repository using
+   `git clone git@github.com:Vuurvos1/twitchTTS.git`
 3. Cd into the project folder
 4. Run `npm install` to install the needed npm packages
 
 ### 🚀 Launch the project
 
-You can start the project using `npm start`
-or run `npm run dev` if you are a developer
+You can start the project by running `npm start` in your console.
+By default, the project will be hosted on [localhost:3000](http://localhost:3000)
 
-By default, the project will be hosted on **port 3000**
+#### Developing
+
+If you are a developer and want to work on the project you can use `npm run dev`, this will start the project using Nodemon and will automatically restart the project once you make changes to a file.
 
 ## 🚀 The future
 

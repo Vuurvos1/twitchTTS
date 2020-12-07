@@ -1,7 +1,7 @@
 {
   "name": "twitchtts",
   "version": "2.0.1",
-  "description": "Stream Overlay to display Highlighted Message Twitch Channel Rewards!",
+  "description": "TwitchTTS is a tool for streamers that reads out highlighted messages form chat",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
