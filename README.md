@@ -1,11 +1,11 @@
 # TwitchTTS
 
-TwitchTTS is a tool for streamers that reads out highlighted messages form chat
+TwitchTTS is a tool for streamers that reads out highlighted messages form chat.
 
 ## 📚 Table of contents
 
 - [🎈 How to use](#-How-to-use)
-- [🔧 Installing the project](#-Installing-and-using-the-project)
+- [🔧 Installing the project](#-Installing-the-project)
 - [🚀 The future](#-The-future)
 - [🗺️ License](#%EF%B8%8F-license)
 - [📝 Sources and credits](#-Sources-and-credits)
@@ -14,11 +14,11 @@ TwitchTTS is a tool for streamers that reads out highlighted messages form chat
 
 You can use this as a browser source inside OBS or have a browser window open.
 When using this app in the browser make sure to at least click the page once so it is allowed to play audio.
-You will not see any elements on the page as long as no highlighted messages are send.
+You will not see any elements on the page as long as no highlighted messages are sent.
 
 **Note**
-For now this only works with the default highlighted message reward so none of the custom ones.
-You can download the project and edit the code to make it work with custom channelpoint rewards but takes a bit more effort to setup.
+For now, this only works with the default highlighted message reward so none of the custom ones.
+You can download the project and edit the code to make it work with custom channel point rewards but takes a bit more effort to set up.
 
 ### Base url
 
@@ -26,7 +26,7 @@ When using the live version
 
 `https://twitchtts.glitch.me/?`
 
-When running localy
+When running locally
 
 `http://localhost:3000/?`
 
@@ -38,10 +38,10 @@ When running localy
 
 #### Voice
 
-You can select a different text to speach voice by adding the voice parameter, by default this is set to Brian
+You can select a different text to speech voice by adding the voice parameter, by default, this is set to Brian
 `voice=Brian`
 
-You can choose from qutie a large selection of voices
+You can choose from quite a large selection of voices
 
 ```
 Aditi   | Amy     | Astrid   | Bianca   | Brian     | Camila   | Carla
@@ -67,9 +67,9 @@ Vicki   | Vitoria | Zeina    | Zhiyu
 
 ## 🔧 Installing the project
 
-If you want to tinker on the project, see how it work or customize it so it fits your needs. you can!
+If you want to tinker on the project, see how it work or customize it to fit your needs, you can!
 
-First of all, make sure you have **Node.js**, **NPM** and **Git** installed
+First of all, make sure you have **Node.js**, **NPM** and **Git** installed.
 
 1. Choose or make a new directory to clone the project to
 2. Clone the repository
@@ -97,7 +97,7 @@ List of possible future features
 
 ## 🗺️ License
 
-Author: [Vuurvos1](https://github.com/Vuurvos1), license by [MIT](#)
+Author: [Vuurvos1](https://github.com/Vuurvos1), license by [MIT](https://github.com/Vuurvos1/twitchTTS/blob/master/LICENSE)
 
 ## 📝 Sources and credits
 
