@@ -1,7 +1,7 @@
 {
-  "name": "highlightofmychat",
-  "version": "1.0.0",
-  "description": "Stream Overlay to display Highlighted Message Twitch Channel Rewards!",
+  "name": "twitchtts",
+  "version": "2.0.1",
+  "description": "TwitchTTS is a tool for streamers that reads out highlighted messages form chat",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -13,7 +13,6 @@
     "url": "git+https://github.com/Vuurvos1/twitchTTS.git"
   },
   "keywords": [
-    "Instafluff",
     "Twitch",
     "Message",
     "Chat",
@@ -30,8 +29,7 @@
     "axios": "^0.20.0",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "webwebweb": "^1.1.5"
+    "express": "^4.17.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.5"
