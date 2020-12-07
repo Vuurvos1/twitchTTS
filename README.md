@@ -61,6 +61,10 @@ Vicki   | Vitoria | Zeina    | Zhiyu
 
 `tts=true`
 
+#### Sub only mode
+
+If you want to only show and or read out the highlighted messages send by subs you can do so by adding `subOnly=true` to the URL
+
 ### Example
 
 This is an example on how your URL might look:
