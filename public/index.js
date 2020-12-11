@@ -13,6 +13,7 @@ const params = new URLSearchParams(location.search);
 const channel = params.get('channel');
 const isTTSEnabled = params.get('tts') || false;
 const subOnly = params.get('subOnly') || false;
+const charLimit = params.get('limit') || null;
 let ttsVoice = params.get('voice') || 'Brian';
 const alignBottom = params.get('bottom') || false;
 const textOnScreenTime = params.get('texttimer') || 30000;
@@ -155,7 +156,15 @@ ComfyJS.onChat = (user, message, flags, self, extra) => {
   if (flags.highlighted) {
     highlightThisMessage(user, message, extra);
   }
-  
+
+  // character limit
+  if (charLimit) {
+    // prevent substring returning empty
+    if (charLimit < message.length) {
+      message = message.substring(0, charLimit);
+    }
+  }
+
   // console.log(user, message, flags, self, extra);
 
   switch (extra.customRewardId) {

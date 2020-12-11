@@ -65,6 +65,14 @@ Vicki   | Vitoria | Zeina    | Zhiyu
 
 If you want to only show and or read out the highlighted messages send by subs you can do so by adding `subOnly=true` to the URL
 
+#### Character limit
+
+By adding the limit parameter to your URL you can prevent very long messages from beeing totaly read out.
+By default this is set to null which will read out the entire message.
+You can change the limit using the limit parameter like so: `limit=100`
+
+Note that the character limit on a twitch message is 500 characters
+
 ### Example
 
 This is an example on how your URL might look:
@@ -100,8 +108,8 @@ List of possible future features
 - [ ] Config files
 - [ ] Custom rewards support
 - [ ] More voices from different service
-- [ ] Sub only mode
-- [ ] Character limit
+- [ x ] Sub only mode
+- [ x ] Character limit
 - [ ] Word blacklist
 
 ## 🗺️ License
