@@ -129,6 +129,14 @@ async function highlightThisMessage(user, message, extra) {
   }
 
   if (isTTSEnabled) {
+    // character limit
+    if (charLimit) {
+      // prevent substring returning empty
+      if (charLimit < message.length) {
+        message = message.substring(0, charLimit);
+      }
+    }
+
     if (typeof message != 'undefined') {
       // add message to queue
       ttsVoice = params.get('voice') || 'Brian';
@@ -155,14 +163,6 @@ ComfyJS.onChat = (user, message, flags, self, extra) => {
 
   if (flags.highlighted) {
     highlightThisMessage(user, message, extra);
-  }
-
-  // character limit
-  if (charLimit) {
-    // prevent substring returning empty
-    if (charLimit < message.length) {
-      message = message.substring(0, charLimit);
-    }
   }
 
   // console.log(user, message, flags, self, extra);
