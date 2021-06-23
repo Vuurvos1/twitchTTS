@@ -1,25 +1,19 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser');
-
 const axios = require('axios');
 
-// Setup server
-let server = app.listen(process.env.PORT || 3000, () => {
-  const port = server.address().port;
-  console.log(`Example app listening at http://localhost:${port}`);
-});
-
-urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use(express.static('public'));
 
 // POST method route
-app.post('/tts', urlencodedParser, async (req, res) => {
+app.post('/tts', async (req, res) => {
   try {
     // res.set('Access-Control-Allow-Origin', 'http://www.localhost:3000/tts');
     // res.set('Access-Control-Allow-Origin', 'http://localhost:3000/tts');
-    res.set('Access-Control-Allow-Origin', 'https://www.twitchtts.glitch.me/tts');
+    res.set(
+      'Access-Control-Allow-Origin',
+      'https://www.twitchtts.glitch.me/tts'
+    );
     res.set('Access-Control-Allow-Origin', 'https://twitchtts.glitch.me/tts');
     res.set('Access-Control-Allow-Methods', 'GET, POST');
     res.set(
@@ -38,8 +32,8 @@ app.post('/tts', urlencodedParser, async (req, res) => {
     const text = req.query.text || 'Please select a message';
 
     const response = await axios.post('https://streamlabs.com/polly/speak', {
-      voice: voice,
-      text: text,
+      voice,
+      text,
     });
 
     if (response.status == 200 && response.data.success) {
@@ -51,4 +45,10 @@ app.post('/tts', urlencodedParser, async (req, res) => {
     console.log(err);
     res.status(404).send('Something brok');
   }
+});
+
+// Setup server
+const server = app.listen(process.env.PORT || 3000, () => {
+  const port = server.address().port;
+  console.log(`Example app listening at http://localhost:${port}`);
 });
