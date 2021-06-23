@@ -8,8 +8,8 @@ app.use(express.static('public'));
 // POST method route
 app.post('/tts', async (req, res) => {
   try {
-    res.set('Access-Control-Allow-Origin', 'http://www.localhost:3000/tts');
-    res.set('Access-Control-Allow-Origin', 'http://localhost:3000/tts');
+    // res.set('Access-Control-Allow-Origin', 'http://www.localhost:3000/tts');
+    // res.set('Access-Control-Allow-Origin', 'http://localhost:3000/tts');
     res.set(
       'Access-Control-Allow-Origin',
       'https://www.twitchtts.glitch.me/tts'
@@ -37,7 +37,6 @@ app.post('/tts', async (req, res) => {
     });
 
     if (response.status == 200 && response.data.success) {
-      // console.log(response.data);
       res.json(response.data);
     } else {
       res.send('streamlabs brok');

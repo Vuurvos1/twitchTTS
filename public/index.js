@@ -12,6 +12,8 @@ const TTS_BASE = `${window.location.origin}/tts`;
 const params = new URLSearchParams(location.search);
 const channel = params.get('channel');
 const isTTSEnabled = params.get('tts') || false;
+const subOnly = params.get('subOnly') || false;
+const charLimit = params.get('limit') || null;
 let ttsVoice = params.get('voice') || 'Brian';
 const alignBottom = params.get('bottom') || false;
 const textOnScreenTime = params.get('texttimer') || 30000;
@@ -127,6 +129,14 @@ async function highlightThisMessage(user, message, extra) {
   }
 
   if (isTTSEnabled) {
+    // character limit
+    if (charLimit) {
+      // prevent substring returning empty
+      if (charLimit < message.length) {
+        message = message.substring(0, charLimit);
+      }
+    }
+
     if (typeof message != 'undefined') {
       // add message to queue
       ttsVoice = params.get('voice') || 'Brian';
@@ -146,11 +156,16 @@ ComfyJS.onMessageDeleted = (id, extra) => {
 };
 
 ComfyJS.onChat = (user, message, flags, self, extra) => {
+  // sub only logic
+  if (subOnly && !flags.subscriber) {
+    return;
+  }
+
   if (flags.highlighted) {
     highlightThisMessage(user, message, extra);
   }
-  // console.log(extra.customRewardId);
-  // console.log(message);
+
+  // console.log(user, message, flags, self, extra);
 
   switch (extra.customRewardId) {
     case '04a057ff-2a23-48c8-a71c-40808099f060':
