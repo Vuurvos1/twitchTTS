@@ -3,7 +3,8 @@ h2 {
   font-size: 5vw;
 }
 
-h2, p {
+h2,
+p {
   margin: 0;
   padding: 0;
 }
@@ -12,7 +13,7 @@ body {
   font-family: 'Open Sans', sans-serif;
   font-size: 4vw;
   color: white;
-  height: 100%;
+  max-height: 100vh;
 }
 
 .parent-container {
@@ -24,7 +25,7 @@ body {
   visibility: hidden;
   padding: 1vw;
   border-radius: 2px;
-  background: rgba( 0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.5);
   position: fixed;
   width: 100%;
 }
@@ -37,20 +38,32 @@ body {
   padding: 0.5vw;
 }
 
-
-
 .testElement {
   position: absolute;
   top: 0;
   left: 0;
 }
 
-.testElement button {
-  padding: 1rem;
-  background-color: hotpink;
-  color: whitesmoke;
+audio {
+  position: absolute;
+  display: none;
 }
 
-.testElement textarea {
-  resize: none;
+.ui {
+  position: absolute;
+  display: none;
+  bottom: 2rem;
+  right: 2rem;
+}
+
+.ui.show {
+  display: initial;
+}
+
+.ui button {
+  font-weight: bold;
+  background-color: red;
+  padding: 1rem;
+  border: none;
+  color: #fff;
 }

@@ -14,6 +14,7 @@ const channel = params.get('channel');
 const isTTSEnabled = params.get('tts') || false;
 const subOnly = params.get('subOnly') || false;
 const charLimit = params.get('limit') || null;
+const ui = params.get('ui') || false;
 let ttsVoice = params.get('voice') || 'Brian';
 const alignBottom = params.get('bottom') || false;
 const textOnScreenTime = params.get('texttimer') || 30000;
@@ -21,6 +22,11 @@ const badgeSets = {};
 let messageId = '';
 let cooldownTimer = null;
 let msgQueue = [];
+
+if (ui) {
+  document.querySelector('.ui').classList.add('show');
+  document.querySelector('.skipTTS').addEventListener('click', skipTTS);
+}
 
 function loadBadgeSet(id) {
   Promise.all([
@@ -283,4 +289,17 @@ async function playTTS() {
     // remove message from queue
     msgQueue.shift();
   }
+}
+
+async function skipTTS() {
+  // stop audio and remove message from queue
+  const audio = elements.audio;
+  audio.pause();
+  audio.currentTime = 0;
+
+  if (msgQueue.length < 1) {
+    return;
+  }
+
+  playTTS();
 }
