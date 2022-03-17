@@ -51,13 +51,8 @@ audio {
 
 .ui {
 	position: absolute;
-	display: none;
 	bottom: 2rem;
 	right: 2rem;
-}
-
-.ui.show {
-	display: initial;
 }
 
 .ui button {

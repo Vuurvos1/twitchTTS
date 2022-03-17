@@ -3,6 +3,65 @@
 	import { page } from '$app/stores';
 	import { browser } from '$app/env';
 
+	const params = $page.url.searchParams;
+	let ttsVoice = params.get('voice') || 'Brian';
+	const channel = params.get('channel');
+	const isTTSEnabled = params.get('tts') || false;
+	const subOnly = params.get('subOnly') || false;
+	const charLimit = params.get('limit') || null;
+	const ui = params.get('ui') || false;
+	const alignBottom = params.get('bottom') || false;
+	const textOnScreenTime = Number(params.get('texttimer')) || 30000;
+
+	let audioEl;
+	let audioSrcEl;
+
+	const BADGES_BASE = 'https://badges.twitch.tv/v1/badges';
+	const EMOTE_BASE = 'https://static-cdn.jtvnw.net/emoticons/v1';
+	const badgeSets = {};
+	let messageId = '';
+	let cooldownTimer = null;
+	let msgQueue = [];
+
+	async function playTTS() {
+		const audio = audioEl;
+
+		if (audio.paused && msgQueue.length > 0) {
+			const text = msgQueue[0];
+			const voice = ttsVoice;
+
+			const speak = await postText(voice, text);
+
+			if (!speak.success) {
+				return;
+			}
+
+			// TODO: Switch to Web Audio API instead of using Audio elements.
+			const mp3 = speak.speak_url;
+			audioSrcEl.src = mp3;
+
+			audio.load();
+			audio.volume = 1;
+			audio.play();
+
+			// remove message from queue
+			msgQueue.shift();
+		}
+	}
+
+	async function skipTTS() {
+		// stop audio and remove message from queue
+		const audio = audioEl;
+		audio.pause();
+		audio.currentTime = 0;
+
+		if (msgQueue.length < 1) {
+			return;
+		}
+
+		playTTS();
+	}
+
 	async function postText(voice, text) {
 		const res = await fetch('/api/v1/tts', {
 			method: 'POST',
@@ -18,37 +77,14 @@
 		return json;
 	}
 
-	// let chat;
 	onMount(async () => {
 		if (browser) {
 			const elements = {
 				badges: document.querySelector('#badges'),
 				username: document.querySelector('#username'),
 				text: document.querySelector('#text'),
-				highlightContainer: document.querySelector('#highlight-container'),
-				source: document.querySelector('#source'),
-				audio: document.querySelector('#audio')
+				highlightContainer: document.querySelector('#highlight-container')
 			};
-			const BADGES_BASE = 'https://badges.twitch.tv/v1/badges';
-			const EMOTE_BASE = 'https://static-cdn.jtvnw.net/emoticons/v1';
-			const params = $page.url.searchParams;
-			const channel = params.get('channel');
-			const isTTSEnabled = params.get('tts') || false;
-			const subOnly = params.get('subOnly') || false;
-			const charLimit = params.get('limit') || null;
-			const ui = params.get('ui') || false;
-			let ttsVoice = params.get('voice') || 'Brian';
-			const alignBottom = params.get('bottom') || false;
-			const textOnScreenTime = Number(params.get('texttimer')) || 30000;
-			const badgeSets = {};
-			let messageId = '';
-			let cooldownTimer = null;
-			let msgQueue = [];
-
-			if (ui) {
-				document.querySelector('.ui').classList.add('show');
-				document.querySelector('.skipTTS').addEventListener('click', skipTTS);
-			}
 
 			function loadBadgeSet(id) {
 				Promise.all([
@@ -169,10 +205,10 @@
 
 			ComfyJS.onMessageDeleted = (id, extra) => {
 				if (id === messageId) {
-					// DELETE THE HIGHLIGHTED MESSAGE
+					// delete highlighted message
 					elements.highlightContainer.style.visibility = 'hidden';
-					elements.audio.pause();
-					elements.audio.src = '';
+					audioEl.pause();
+					audioEl.src = '';
 				}
 			};
 
@@ -258,6 +294,7 @@
 			if (channel) {
 				ComfyJS.Init(channel);
 
+				// TODO fix this?
 				fetch(`https://api.twitch.tv/helix/users?login=${channel}`, {
 					headers: {
 						'Client-ID': '2odsv8xermvalbub7wipebrphqlpqv'
@@ -267,48 +304,10 @@
 					.then((data) => loadBadgeSet(data.data[0].id));
 			}
 
-			elements.audio.addEventListener('ended', () => {
+			audioEl.addEventListener('ended', () => {
 				// add bit of delay between messages
 				setTimeout(playTTS, 500);
 			});
-
-			async function playTTS() {
-				if (audio.paused && msgQueue.length > 0) {
-					const text = msgQueue[0];
-					const voice = ttsVoice;
-
-					const speak = await postText(voice, text);
-
-					if (!speak.success) {
-						return;
-					}
-
-					// TODO: Switch to Web Audio API instead of using Audio elements.
-					const mp3 = speak.speak_url;
-					elements.source.src = mp3;
-					const audio = elements.audio;
-
-					audio.load();
-					audio.volume = 1;
-					audio.play();
-
-					// remove message from queue
-					msgQueue.shift();
-				}
-			}
-
-			async function skipTTS() {
-				// stop audio and remove message from queue
-				const audio = elements.audio;
-				audio.pause();
-				audio.currentTime = 0;
-
-				if (msgQueue.length < 1) {
-					return;
-				}
-
-				playTTS();
-			}
 		}
 	});
 </script>
@@ -325,10 +324,12 @@
 	</div>
 </div>
 
-<section class="ui">
-	<button class="skipTTS">Skip message</button>
-</section>
+{#if ui}
+	<section class="ui">
+		<button class="skipTTS" on:click={skipTTS}>Skip message</button>
+	</section>
+{/if}
 
-<audio id="audio" style="visibility: hidden">
-	<source id="source" type="audio/wav" />
+<audio style="visibility: hidden" bind:this={audioEl}>
+	<source type="audio/wav" bind:this={audioSrcEl} />
 </audio>
