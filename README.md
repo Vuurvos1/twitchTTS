@@ -1,6 +1,6 @@
 # TwitchTTS
 
-TwitchTTS is a tool for streamers that reads out highlighted messages form chat.
+Twitch Text to Speech, a tool for streamers that reads out highlighted messages form chat.
 
 ## 📚 Table of contents
 
@@ -24,7 +24,7 @@ You can download the project and edit the code to make it work with custom chann
 
 When using the live version
 
-`https://twitchtts.glitch.me/?`
+`https://twitchtts.vercel.app/?`
 
 When running locally
 
@@ -38,7 +38,7 @@ You can add multiple parameters to a URL by chaining them using the `&` symbol, 
 
 `channel=firefox__`
 
-#### Voice
+#### Voices
 
 You can select a different text to speech voice by adding the voice parameter. By default, this is set to Brian.
 `voice=Brian`
@@ -76,7 +76,7 @@ Note that the character limit on a twitch message is 500 characters
 ### Example
 
 This is an example on how your URL might look:
-`https://twitchtts.glitch.me/?channel=Firefox__&tts=true&voice=Brian`
+`https://twitchtts.vercel.app/?channel=Firefox__&tts=true&voice=Brian`
 
 First, we have the base URL, then we set the channel to `Firefox__` using `channel=Firefox__` then we turn the text to speech function on using `tts=true` and last but not least we set the text to speech voice to `Brian` using the voice parameter.
 
@@ -90,7 +90,7 @@ First of all, make sure you have **Node.js**, **NPM** and **Git** installed.
 2. Clone the repository using
    `git clone git@github.com:Vuurvos1/twitchTTS.git`
 3. Cd into the project folder
-4. Run `npm install` to install the needed npm packages
+4. Run `npm install` (or `pnpm install` or `yarn`) to install the needed npm packages
 
 ### 🚀 Launch the project
 
@@ -99,7 +99,26 @@ By default, the project will be hosted on [localhost:3000](http://localhost:3000
 
 #### Developing
 
-If you are a developer and want to work on the project you can use `npm run dev`, this will start the project using Nodemon and will automatically restart the project once you make changes to a file.
+Once you've cloned the project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), you can start a development server:
+
+```bash
+npm run dev
+
+# or start the server and open the app in a new browser tab
+npm run dev -- --open
+```
+
+#### Building
+
+To create a production version of the app:
+
+```bash
+npm run build
+```
+
+You can preview the production build with `npm run preview`.
+
+> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
 
 ## 🚀 The future
 
