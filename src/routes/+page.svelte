@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
-	import { browser } from '$app/env';
+	import { browser } from '$app/environment';
 
 	const params = $page.url.searchParams;
 	let ttsVoice = params.get('voice') || 'Brian';

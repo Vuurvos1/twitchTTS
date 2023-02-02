@@ -24,7 +24,7 @@ You can download the project and edit the code to make it work with custom chann
 
 When using the live version
 
-`https://twitchtts.vercel.app/?`
+`https://twitchtts.vercel.app?`
 
 ### Parameters
 
@@ -76,7 +76,7 @@ Note that the character limit on a twitch message is 500 characters
 This is an example on how your URL might look:
 
 ```
-`https://twitchtts.vercel.app/?channel=Firefox__&tts=true&voice=Brian`
+`https://twitchtts.vercel.app?channel=Firefox__&voice=Brian`
 ```
 
 First, we have the base URL, then we set the channel to `Firefox__` using `channel=Firefox__` then we turn the text to speech function on using `tts=true` and last but not least we set the text to speech voice to `Brian` using the voice parameter.

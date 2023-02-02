@@ -1,4 +1,7 @@
-export async function post({ request }) {
+import { error } from '@sveltejs/kit';
+
+/** @type {import('./$types').RequestHandler} */
+export async function POST({ request }) {
 	let { voice, text } = await request.json();
 	// fallback values
 	voice = voice ? voice : 'Brian';
@@ -18,14 +21,8 @@ export async function post({ request }) {
 	const json = await res.json();
 
 	if (json.success) {
-		return {
-			status: 200,
-			body: json
-		};
+		return new Response(JSON.stringify(json));
 	}
 
-	return {
-		status: 404,
-		body: 'something went wrong :('
-	};
+	throw error(404, 'Something went wrong :(');
 }
