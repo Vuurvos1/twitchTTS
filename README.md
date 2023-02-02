@@ -26,10 +26,6 @@ When using the live version
 
 `https://twitchtts.vercel.app/?`
 
-When running locally
-
-`http://localhost:3000/?`
-
 ### Parameters
 
 You can add multiple parameters to a URL by chaining them using the `&` symbol, [see example](#Example)
@@ -61,6 +57,8 @@ Vicki   | Vitoria | Zeina    | Zhiyu
 
 `tts=true`
 
+Defaults to true
+
 #### Sub only mode
 
 If you want to only show and or read out the highlighted messages send by subs you can do so by adding `subOnly=true` to the URL
@@ -76,7 +74,10 @@ Note that the character limit on a twitch message is 500 characters
 ### Example
 
 This is an example on how your URL might look:
+
+```
 `https://twitchtts.vercel.app/?channel=Firefox__&tts=true&voice=Brian`
+```
 
 First, we have the base URL, then we set the channel to `Firefox__` using `channel=Firefox__` then we turn the text to speech function on using `tts=true` and last but not least we set the text to speech voice to `Brian` using the voice parameter.
 
@@ -84,18 +85,18 @@ First, we have the base URL, then we set the channel to `Firefox__` using `chann
 
 If you want to tinker on the project, see how it work or customize it to fit your needs, you can!
 
-First of all, make sure you have **Node.js**, **NPM** and **Git** installed.
+First of all, make sure you have **Node.js** and **Git** installed.
 
 1. Choose or make a new directory to clone the project to
 2. Clone the repository using
    `git clone git@github.com:Vuurvos1/twitchTTS.git`
 3. Cd into the project folder
-4. Run `npm install` (or `pnpm install` or `yarn`) to install the needed npm packages
+4. Run `pnpm install` (or `npm install`) to install the needed npm packages
 
 ### 🚀 Launch the project
 
 You can start the project by running `npm start` in your console.
-By default, the project will be hosted on [localhost:3000](http://localhost:3000)
+By default, the project will be hosted on [localhost:5173](http://localhost:5173)
 
 #### Developing
 
@@ -127,8 +128,8 @@ List of possible future features
 - [ ] Config files
 - [ ] Custom rewards support
 - [ ] More voices from different service
-- [ x ] Sub only mode
-- [ x ] Character limit
+- [x] Sub only mode
+- [x] Character limit
 - [ ] Word blacklist
 
 ## 🗺️ License

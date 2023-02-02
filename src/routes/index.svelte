@@ -6,7 +6,7 @@
 	const params = $page.url.searchParams;
 	let ttsVoice = params.get('voice') || 'Brian';
 	const channel = params.get('channel');
-	const isTTSEnabled = params.get('tts') || false;
+	const isTTSEnabled = params.get('tts') === 'false' ? false : true;
 	const subOnly = params.get('subOnly') || false;
 	const charLimit = params.get('limit') || null;
 	const ui = params.get('ui') || false;
